@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './style/Sidebar.css';
 import SidebarOption from './SidebarOption';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -13,13 +13,26 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
+import db from '../Firebase';
 
 const Sidebar = () => {
+    const [channels, setChannels] = useState([]);
+    useEffect(() => {
+        db.collection('rooms').onSnapshot(snapshot => {
+            setChannels(
+                snapshot.docs.map(doc => ({
+                    id:doc.id,
+                    name:doc.data().name,
+                }))
+            );
+        });
+    }, []) //run this code when the sidebar-component loads, ONCE (since the array is empty array at the end)
+    
     return (
         <div className="sidebar">
             <div className="sidebar__header">
                 <div className="sidebar__info">
-                    <h2>Slack 2.0</h2>
+                    <h2>Runtime Error</h2>
                     <h3>
                         <FiberManualRecordIcon />
                         Abdul Ahad
@@ -39,6 +52,10 @@ const Sidebar = () => {
             <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
             <hr className="sidebar__hr" />
             <SidebarOption Icon={AddIcon} title="Add channel" />
+
+            {channels.map((channel) => {
+                return  <SidebarOption title={channel.name} id={channel.id} />;
+            })}
         </div>
     )
 }

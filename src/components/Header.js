@@ -26,7 +26,7 @@ const Header = () => {
                <SearchIcon />
 
                {/* Input */}
-               <input type="text" placeholder="Search Slack" />
+               <input type="text" placeholder="Search RuntimeError" />
            </div>
            <div className="header__right">
                {/* Help Icon*/}
