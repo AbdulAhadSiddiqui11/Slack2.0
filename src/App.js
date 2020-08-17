@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import Login from './components/Login';
+import Welcome from './components/Welcome';
+import { useStateValue } from './StateProvider';
+
 
 function App() {
-  const [user, setUser] = useState(null);
+
+  // eslint-disable-next-line
+  const [{ user }, dispatch] = useStateValue();
 
   return (
     <div className="App">
@@ -24,7 +29,7 @@ function App() {
                   <Chat />
                 </Route>
                 <Route path="/">
-                  <h1>Welcome to RTE</h1>
+                  <Welcome />
                 </Route>
               </Switch>
             </div>

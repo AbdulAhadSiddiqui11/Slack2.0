@@ -4,6 +4,7 @@
     align-items: center;
     scroll-padding-left: 2px;
     cursor: pointer;
+    background-color: var(--slack-color);
 }
 
 .sidebarOption:hover {

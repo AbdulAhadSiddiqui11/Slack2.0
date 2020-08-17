@@ -14,9 +14,13 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import db from '../Firebase';
+import { useStateValue } from '../StateProvider';
+
 
 const Sidebar = () => {
+    const [{user}] = useStateValue();
     const [channels, setChannels] = useState([]);
+
     useEffect(() => {
         db.collection('rooms').onSnapshot(snapshot => {
             setChannels(
@@ -35,7 +39,7 @@ const Sidebar = () => {
                     <h2>Runtime Error</h2>
                     <h3>
                         <FiberManualRecordIcon />
-                        Abdul Ahad
+                        {user?.displayName}
                     </h3>
                 </div>
                 <CreateIcon />
@@ -54,7 +58,7 @@ const Sidebar = () => {
             <SidebarOption Icon={AddIcon} channels = {channels} addChannelOption="True" title="Add channel" />
 
             {channels.map((channel) => {
-                return  <SidebarOption title={channel.name} id={channel.id} />;
+                return  <SidebarOption title={channel.name} key={channel.id} id={channel.id} />;
             })}
         </div>
     )

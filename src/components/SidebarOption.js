@@ -15,7 +15,7 @@ const SidebarOption = ({ Icon, title, id, addChannelOption, channels }) => {
     };
 
     const addChannel = () => {
-        const channelName = prompt('Please enter the channel name').toLowerCase();
+        const channelName = prompt('Please enter the channel name')?.toLowerCase();
         let alreadyExists = false;
         if (channelName) {
             channels.forEach(channel => {
@@ -26,13 +26,18 @@ const SidebarOption = ({ Icon, title, id, addChannelOption, channels }) => {
             if(alreadyExists) {
                 alert('Channel already exists!');
             } else {
-                db.collection('rooms').add({name: channelName});
+                db.collection('rooms').add({name: channelName})
+                .catch((error) => {
+                    //console.error("Error adding document: ", error);
+                    alert("Something went wrong! Please try again ...")
+                });;
+                
             }
         }
     };
 
     return (
-        <div className="sidebarOption" onClick={addChannelOption ? addChannel : selectChannel}>
+        <div className="sidebarOption" onClick={addChannelOption ? addChannel : selectChannel} key={id}>
             {Icon && <Icon className="sidebarOption__icon" />} { /*if the icon is passed then only render it! */ }
             {Icon ? ( <h3>{ title }</h3> ) : (<h3 className="sidebarOption__channel"> <span className="sidebarOption__hash"> # </span> { title } </h3>)}
         </div>
