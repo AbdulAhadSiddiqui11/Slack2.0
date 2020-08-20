@@ -1,4 +1,4 @@
-# Slack2.0
+# Slack 2.0
 
 ### Live project : https://abdulahad-slack.web.app/
 
